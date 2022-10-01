@@ -1,0 +1,12 @@
+Pyrebase4
+vosk
+sentence-transformers
+pytube
+youtube-transcript-api
+ffmpeg-python
+streamlit
+pyngrok
+streamlit-option-menu
+streamlit-lottie
+beautifulsoup4==4.9.3
+lxml
