@@ -148,17 +148,16 @@ if choice == 'Login':
                          <b>If you have any query you can specify that in contact section </b>""", True) 
 
         with C: 
-          if selected == 'Contact': 
-            st.header(":mailbox: Get Touch With Us!")
-            contact_form = """
-            <form action="https://formsubmit.co/quickzam.ai@gmail.com" method="POST">
-                 <input type="hidden" name="_captcha" value="false">
-                 <input type="text" name="name" placeholder="Your name" required>
-                 <input type="email" name="email" placeholder="Your email" required>
-                 <textarea name="message" placeholder="Your message here"></textarea>
-                 <button type="submit">Send</button>
-            </form>
-            """
+          st.header(":mailbox: Get Touch With Us!")
+          contact_form = """
+          <form action="https://formsubmit.co/quickzam.ai@gmail.com" method="POST">
+               <input type="hidden" name="_captcha" value="false">
+               <input type="text" name="name" placeholder="Your name" required>
+               <input type="email" name="email" placeholder="Your email" required>
+               <textarea name="message" placeholder="Your message here"></textarea>
+               <button type="submit">Send</button>
+          </form>
+          """
           st.markdown(contact_form, unsafe_allow_html=True)
           def local_css(file_name):
             with open(file_name) as f:
