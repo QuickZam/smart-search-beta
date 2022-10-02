@@ -141,7 +141,7 @@ class DFMaker:
     #for sen in n_3_grams:  ###################### CHANGE THIS #####################################
       #total_emb.append(self.bi_encoder.encode(sen,convert_to_numpy=True))
 
-    self.bi_encoder.encode(n_3_grams, convert_to_numpy = True, batches = 32)
+    self.bi_encoder.encode(n_3_grams, batch_size = 32)
 
     df = pd.DataFrame()
     df['Sentance_3_cleaned'] = n_3_grams
