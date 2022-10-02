@@ -1,4 +1,3 @@
-################# imports ################################
 import pyrebase
 import streamlit as st 
 from datetime import datetime 
@@ -9,7 +8,6 @@ from streamlit_option_menu import option_menu
 from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
 
-######################### Utili functions #####################################
 def super(query, dataframe): 
   se = SemanticSearch(query, dataframe)
   timing, yt_links = se.search()
@@ -120,5 +118,9 @@ if choice == 'Login':
 
             st.session_state.s_q = st.text_area("Enter the Query/ Question")
 
-            if st.button('process'): super(st.session_state.s_q, single_dataframe)
+            if st.button('process'): 
+              try: 
+                super(st.session_state.s_q, single_dataframe)
+              except NameError: 
+                print("Try to toggle on Start Engine Button! This is because you off the start engine button!")
             
