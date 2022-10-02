@@ -4,7 +4,6 @@ import streamlit as st, os, json, re
 from streamlit_lottie import st_lottie  
 from streamlit_option_menu import option_menu  ##
 
-os.chdir("/content/drive/MyDrive/SmartSearch/Production/PY_Files")
 from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
 
