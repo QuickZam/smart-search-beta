@@ -8,6 +8,7 @@ from streamlit_option_menu import option_menu
 from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
 
+@st.cache(show_spinner = False)
 def super(query, dataframe): 
   se = SemanticSearch(query, dataframe)
   timing, yt_links = se.search()
@@ -122,5 +123,5 @@ if choice == 'Login':
               try: 
                 super(st.session_state.s_q, single_dataframe)
               except NameError: 
-                print("Try to toggle on Start Engine Button! This is because you off the start engine button!")
+                st.error("Try to toggle on Start Engine Button! This is because you off the start engine button!")
             
