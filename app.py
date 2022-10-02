@@ -1,10 +1,10 @@
-import pyrebase
+import pyrebase, requests 
 import streamlit as st 
-from datetime import datetime 
-import streamlit as st, os, json   
+import streamlit as st, os, json, re   
 from streamlit_lottie import st_lottie  
-from streamlit_option_menu import option_menu 
+from streamlit_option_menu import option_menu  ##
 
+os.chdir("/content/drive/MyDrive/SmartSearch/Production/PY_Files")
 from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
 
@@ -40,6 +40,12 @@ def ci():
   st.session_state.single_dataframe = channel_dataframe 
   return channel_dataframe 
 
+def check_email(email):
+  regex = r'\b[A-Za-z0-9._%+-]+@gmail.com'
+  if(re.fullmatch(regex, email)):
+    return True 
+  else: return False
+
 ########################### Page Configuraiton ###############################
 page_title = "Smart Search"
 page_icon = '🔥'
@@ -63,11 +69,32 @@ auth = firebase.auth() # intialize aunthentication
 db = firebase.database()  # initialize database 
 storage = firebase.storage()  # initialize storage 
 
+#st.sidebar.image('https://i.pinimg.com/736x/4e/2f/80/4e2f808cd07610cea05ffdac6244871d.jpg', width = 130)
+st.sidebar.subheader('Main Menu')
+
+st.sidebar.markdown(
+    """
+    <style>
+    .sidebar .sidebar-content {
+        background-image: linear-gradient(#2e7bcf,#2e7bcf);
+        color: white;
+    }
+    </style>
+    """, unsafe_allow_html=True,
+)
+
 # authentication for the user
 choice = st.sidebar.selectbox('login/singup', ['Login', 'Sign up'])
 email = st.sidebar.text_input("Please enter your email address") 
+
+# checking email is proper or not! 
+if email: 
+  if check_email(email) == False:  
+    st.error('Please enter valid email address!')
+    st.stop()
+
 password = st.sidebar.text_input("please enter your password", type = 'password')
-#st.sidebar.image('https://i.pinimg.com/736x/4e/2f/80/4e2f808cd07610cea05ffdac6244871d.jpg')
+
 
 # sign up configuration 
 if choice == 'Sign up': 
@@ -75,8 +102,15 @@ if choice == 'Sign up':
   submit = st.sidebar.button('Create my account!')
 
   if submit: 
-    user = auth.create_user_with_email_and_password(email, password)  # creating a account with username and password 
-    st.success("Your account is created succesfully!")
+    # handling user sign in 
+    try: 
+      user = auth.create_user_with_email_and_password(email, password)  # creating a account with username and password 
+      st.success("Your account is created succesfully!")
+    except requests.HTTPError as exception:
+      if "WEAK_PASSWORD" in str(exception): 
+        st.info("Your password is too weak. Try different password")
+        st.markdown("If you have doubt in creating strong password. Visit this [website](https://1password.com/password-generator/)", True)
+        st.stop()
 
     # sign in 
     user = auth.sign_in_with_email_and_password(email, password)
@@ -89,17 +123,49 @@ if choice == 'Sign up':
 if choice == 'Login':
     login = st.sidebar.checkbox('Login')
     if login:
-        user = auth.sign_in_with_email_and_password(email,password)
+
+        try: 
+          user = auth.sign_in_with_email_and_password(email,password)
+        except requests.HTTPError as exception:
+          go = str(exception)
+
+          if "INVALID_PASSWORD" in go: 
+            st.error('Password in In-Correct ⚠️')
+            st.caption('If you forgot try contact us otherwise many attempt lead your account to be disabled for safety purpose!')
+            st.stop()
+            
+
+
         st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)  # it writes in horizontal way instead of vertical way! 
 
         #################################### APP ####################################
         H, S, C = st.tabs(['HOME', 'SMART SEARCH', 'CONTACT'])  # creating tab 
 
         with H: 
-          pass 
+          st.header("Smart Search Home Page!")
+          load_lottie('https://assets1.lottiefiles.com/packages/lf20_M9p23l.json', height = 500, width = 500)
+          st.markdown("""<p> Welcome to Smart Search, this app helps you to clear your doubts in topics you have learnt in some videos</p> 
+                         <p> Go to smart search section and start searching it </p> 
+                         <b>If you have any query you can specify that in contact section </b>""", True) 
 
         with C: 
-          pass 
+          if selected == 'Contact': 
+          st.header(":mailbox: Get Touch With Us!")
+          contact_form = """
+          <form action="https://formsubmit.co/quickzam.ai@gmail.com" method="POST">
+               <input type="hidden" name="_captcha" value="false">
+               <input type="text" name="name" placeholder="Your name" required>
+               <input type="email" name="email" placeholder="Your email" required>
+               <textarea name="message" placeholder="Your message here"></textarea>
+               <button type="submit">Send</button>
+          </form>
+          """
+          st.markdown(contact_form, unsafe_allow_html=True)
+          def local_css(file_name):
+            with open(file_name) as f:
+                st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+          local_css("style/style.css")
 
         with S: 
             link = st.text_input('The URL link') 
@@ -124,4 +190,3 @@ if choice == 'Login':
                 super(st.session_state.s_q, single_dataframe)
               except NameError: 
                 st.error("Try to toggle on Start Engine Button! This is because you off the start engine button!")
-            
