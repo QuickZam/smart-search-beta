@@ -138,14 +138,11 @@ class DFMaker:
       link.append(i['link'])
     n_3_grams = self.generate_N_grams(text,3)  # call the punctuation api 
 
-    #for sen in n_3_grams:  ###################### CHANGE THIS #####################################
-      #total_emb.append(self.bi_encoder.encode(sen,convert_to_numpy=True))
-
-    self.bi_encoder.encode(n_3_grams, batch_size = 32)
+    total_emb = self.bi_encoder.encode(n_3_grams, convert_to_numpy = True)
 
     df = pd.DataFrame()
     df['Sentance_3_cleaned'] = n_3_grams
-    df['Embeddings'] = total_emb
+    df['Embeddings'] = total_emb.tolist()
     df['Sentance_3'] = text[:-2]
     df['time'] = start[:-2]
     df['link'] = link[:-2] 
