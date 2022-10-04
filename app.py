@@ -358,14 +358,14 @@ if choice == 'Login':
                <input type="email" name="email" placeholder="Your email" required>
                <textarea name="message" placeholder="Your message here"></textarea>
                <button type="submit">Send</button>
-          </form>
-          """
-         st.markdown(contact_form, unsafe_allow_html=True)
-         def local_css(file_name):
+          </form>"""
+        
+        st.markdown(contact_form, unsafe_allow_html=True)
+        def local_css(file_name):
             with open(file_name) as f:
                 st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
-         local_css("style/style.css")
+        local_css("style/style.css")
 
       with S: 
           op = st.radio('Select any one', options = ['Upload link for new video', 'Use existing video from database'])
