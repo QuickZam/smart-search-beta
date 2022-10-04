@@ -264,7 +264,7 @@ st.set_page_config(page_title = page_title, page_icon = page_icon)
 
 streamlit_style = """
 			<style>
-			@import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20Mono');
+			@import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20Mono:wght@100&display=swap');
 
 			html, body, [class*="css"]  {
 			font-family: 'Roboto', sans-serif;
