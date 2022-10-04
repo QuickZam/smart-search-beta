@@ -356,9 +356,11 @@ if choice == 'Login':
       with H: 
         st.header("Smart Search Home Page!")
         load_lottie('https://assets1.lottiefiles.com/packages/lf20_M9p23l.json', height = 500, width = 500)
-        st.markdown("""<p> Welcome to Smart Search, this app helps you to clear your doubts in topics you have learnt in some videos</p> 
-                        <p> Go to smart search section and start searching it </p> 
-                        <b>If you have any query you can specify that in contact section </b>""", True) 
+        st.markdown("""
+	<p style="font-family:Monospace;font-size:20px"> Welcome to Smart Search, this app helps you to clear your doubts in topics you have learnt in some videos.</p> 
+	<p style="font-family:Monospace;font-size:20px"> Go to smart search section and start searching it.</p> 
+	<br>
+	<p  style="font-family:Monospace;font-size:20px;color:green">If you have any query you can specify that in contact section.</p>""", True) 
 
       with C: 
         pass
