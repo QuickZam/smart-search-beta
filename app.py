@@ -418,17 +418,17 @@ if choice == 'Login':
 
 
               if st.session_state.result == 'PLAYLIST': 
-                with st.spinner('This will take some time!'): 
-                    single_dataframes = pi(link)
-                    title =  Playlist(link).title
-		    st.write(title)
-                    dict_single_dataframes = single_dataframes.to_json()
-	            st.write(dict_single_dataframes)
+		with st.spinner('This will take some time!'): 
+		    single_dataframes = pi(link)
+		    tit =  Playlist(link).title
+		    st.write(tit)
+		    dict_single_dataframes = single_dataframes.to_json()
+		    st.write(dict_single_dataframes)
 
 
-                    db.child(user['localId']).child("DF").push(dict_single_dataframes)
-                    db.child(user['localId']).child('LINK').push(title)
-                    st.success('Your file succesfully uploaded to database!')
+		    db.child(user['localId']).child("DF").push(dict_single_dataframes)
+		    db.child(user['localId']).child('LINK').push(tit)
+		    st.success('Your file succesfully uploaded to database!')
 
           if op ==  'Use existing video from database': 
 
