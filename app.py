@@ -190,6 +190,7 @@
 
 
 
+
 import pyrebase, requests 
 import numpy as np 
 import pandas as pd
@@ -198,7 +199,7 @@ import streamlit as st
 import urllib.request, urllib
 import streamlit as st, os, json, re   
 from streamlit_lottie import st_lottie  
-from streamlit_option_menu import option_menu  
+from streamlit_option_menu import option_menu  ##
 
 from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
@@ -262,17 +263,6 @@ page_title = "Smart Search"
 page_icon = '🔥'
 st.set_page_config(page_title = page_title, page_icon = page_icon)
 
-streamlit_style = """
-			<style>
-			@import url('https://fonts.googleapis.com/css2?family=Noto%20Sans%20Mono:wght@100&display=swap');
-
-			html, body, [class*="css"]  {
-			font-family: 'Roboto', sans-serif;
-			}
-			</style>
-			"""
-st.markdown(streamlit_style, unsafe_allow_html=True)
-
 ######################### Database Configuration ##############################
 firebaseConfig = {
   'apiKey': "AIzaSyChLR2Dfjzww5tgtri1nRBcuiAT9o3AAeA",
@@ -292,7 +282,7 @@ db = firebase.database()  # initialize database
 storage = firebase.storage()  # initialize storage 
 
 st.sidebar.subheader('Main Menu')
-#st.sidebar.image('https://i.pinimg.com/736x/4e/2f/80/4e2f808cd07610cea05ffdac6244871d.jpg', width = 120)
+st.sidebar.image('https://i.pinimg.com/736x/4e/2f/80/4e2f808cd07610cea05ffdac6244871d.jpg', width = 120)
 
 st.sidebar.markdown(
     """
@@ -356,30 +346,12 @@ if choice == 'Login':
       with H: 
         st.header("Smart Search Home Page!")
         load_lottie('https://assets1.lottiefiles.com/packages/lf20_M9p23l.json', height = 500, width = 500)
-        st.markdown("""
-	<p style="font-family:Monospace;font-size:20px"> Welcome to Smart Search, this app helps you to clear your doubts in topics you have learnt in some videos.</p> 
-	<p style="font-family:Monospace;font-size:20px"> Go to smart search section and start searching it.</p> 
-	<br>
-	<p  style="font-family:Monospace;font-size:20px;color:green">If you have any query you can specify that in contact section.</p>""", True) 
+        st.markdown("""<p> Welcome to Smart Search, this app helps you to clear your doubts in topics you have learnt in some videos</p> 
+                        <p> Go to smart search section and start searching it </p> 
+                        <b>If you have any query you can specify that in contact section </b>""", True) 
 
       with C: 
-        pass
-#         st.header(":mailbox: Get Touch With Us!")
-#         contact_form = """
-#           <form action="https://formsubmit.co/quickzam.ai@gmail.com" method="POST">
-#                <input type="hidden" name="_captcha" value="false">
-#                <input type="text" name="name" placeholder="Your name" required>
-#                <input type="email" name="email" placeholder="Your email" required>
-#                <textarea name="message" placeholder="Your message here"></textarea>
-#                <button type="submit">Send</button>
-#           </form>"""
-        
-#         st.markdown(contact_form, unsafe_allow_html=True)
-#         def local_css(file_name):
-#             with open(file_name) as f:
-#                 st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-#         local_css("style/style.css")
+        pass 
 
       with S: 
           op = st.radio('Select any one', options = ['Upload link for new video', 'Use existing video from database'])
@@ -409,25 +381,22 @@ if choice == 'Login':
               if st.session_state.result == 'CHANNEL': 
                 with st.spinner('This will take some time!'):
                   single_dataframe = ci()
-                  title =  get_title_helper(link.split('=')[1])
 
                   dict_single_dataframe = single_dataframe.to_json()
                   db.child(user['localId']).child("DF").push(dict_single_dataframe)
-                  db.child(user['localId']).child('LINK').push(title)
                   st.success('Your file succesfully uploaded to database!')
 
 
               if st.session_state.result == 'PLAYLIST': 
-		with st.spinner('This will take some time!'): 
-		  single_dataframes = pi(link)
-		  tit =  Playlist(link).title
-		  dict_single_dataframes = single_dataframes.to_json()
-		  st.write(dict_single_dataframes)
+                with st.spinner('This will take some time!'): 
+                    single_dataframes = pi(link)
+                    title =  Playlist(link).title
+                    dict_single_dataframes = single_dataframes.to_json()
 
 
-		  db.child(user['localId']).child("DF").push(dict_single_dataframes)
-		  db.child(user['localId']).child('LINK').push(tit)
-		  st.success('Your file succesfully uploaded to database!')
+                    db.child(user['localId']).child("DF").push(dict_single_dataframes)
+                    db.child(user['localId']).child('LINK').push(title)
+                    st.success('Your file succesfully uploaded to database!')
 
           if op ==  'Use existing video from database': 
 
