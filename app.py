@@ -189,9 +189,6 @@
 #                 st.error("Try to toggle on Start Engine Button! This is because you off the start engine button!")
 
 
-#@title Streamlit with authentication 
-
-%%writefile app.py 
 
 import pyrebase, requests 
 import numpy as np 
