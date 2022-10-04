@@ -262,6 +262,17 @@ page_title = "Smart Search"
 page_icon = '🔥'
 st.set_page_config(page_title = page_title, page_icon = page_icon)
 
+streamlit_style = """
+			<style>
+			@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+			html, body, [class*="css"]  {
+			font-family: 'Roboto', sans-serif;
+			}
+			</style>
+			"""
+st.markdown(streamlit_style, unsafe_allow_html=True)
+
 ######################### Database Configuration ##############################
 firebaseConfig = {
   'apiKey': "AIzaSyChLR2Dfjzww5tgtri1nRBcuiAT9o3AAeA",
