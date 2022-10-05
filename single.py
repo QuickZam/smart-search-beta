@@ -14,6 +14,8 @@ from youtube_transcript_api.formatters import JSONFormatter
 from sentence_transformers import SentenceTransformer, CrossEncoder, util
 from tqdm import tqdm
 from bs4 import BeautifulSoup
+from nltk.corpus import words
+import json, gzip, os, torch, re
 
 # model = Model('/content/drive/MyDrive/SmartSearch/vosk-model-en-us-0.22')
 
@@ -136,15 +138,14 @@ class DFMaker:
       text.append(i['text'])
       start.append(i['start'])
       link.append(i['link'])
-    n_3_grams = self.generate_N_grams(text,3)  # call the punctuation api 
+    n_3_grams = self.generate_N_grams(text,3)
 
-    #total_emb = self.bi_encoder.encode(n_3_grams, convert_to_numpy = True)
     for sen in n_3_grams:
       total_emb.append(self.bi_encoder.encode(sen,convert_to_numpy=True))
 
     df = pd.DataFrame()
     df['Sentance_3_cleaned'] = n_3_grams
-    df['Embeddings'] = [total_emb] 
+    df['Embeddings'] = total_emb
     df['Sentance_3'] = text[:-2]
     df['time'] = start[:-2]
     df['link'] = link[:-2] 
