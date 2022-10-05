@@ -230,7 +230,7 @@ def pi(link):
         playlist_transcript = TranscriptSaverPlaylist([link]).get_transcript()
         playlist_dataframe = DFMaker(playlist_transcript).df()
         return playlist_dataframe
-    except Excpetion as E: 
+    except Exception as E: 
         st.write(E)
 
 @st.cache(show_spinner = False)
