@@ -218,6 +218,7 @@ def si(link):
         from single import DFMaker, SingleFileTranscript
         single_transcript = SingleFileTranscript(link).get_transcript() 
         single_dataframe = DFMaker(single_transcript).df()
+        st.write(single_dataframe)
         st.session_state.single_dataframe = single_dataframe 
         return single_dataframe
     except Exception as E: 
