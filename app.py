@@ -98,7 +98,7 @@ db = firebase.database()  # initialize database
 storage = firebase.storage()  # initialize storage 
 
 st.sidebar.subheader('Main Menu')
-#st.sidebar.image('https://i.pinimg.com/736x/4e/2f/80/4e2f808cd07610cea05ffdac6244871d.jpg', width = 120)
+st.sidebar.image('images\quick.png', width = 120)
 
 st.sidebar.markdown(
     """
