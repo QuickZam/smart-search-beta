@@ -121,7 +121,7 @@ class DFMaker:
 
       df = pd.DataFrame()
       df['Sentance_3_cleaned'] = n_3_grams
-      df['Embeddings'] = total_emb.tolist()
+      df['Embeddings'] = total_emb
       df['Sentance_3'] = text[:-2]
       df['time'] = start[:-2]
       df['link'] = link[:-2] 
