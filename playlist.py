@@ -115,7 +115,6 @@ class DFMaker:
         link.append(i['link'])
       n_3_grams = self.generate_N_grams(text,3)
 
-      #total_emb = self.bi_encoder.encode(n_3_grams, convert_to_numpy = True)
       for sen in n_3_grams:
         total_emb.append(self.bi_encoder.encode(sen,convert_to_numpy=True))
 
@@ -225,4 +224,4 @@ class TranscriptSaverPlaylist:
         # all_transcripts.append(c)
         pass 
 
-    return all_transcripts
+    return all_transcripts 
