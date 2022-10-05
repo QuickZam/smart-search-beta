@@ -13,15 +13,40 @@ from utils import load_lottie, give_it_here
 from playlist import SemanticSearch  
 
 
-def super(query, dataframe): 
+def super(query : str, dataframe):
+    """This Function helps to show the video in the streamlit UI. 
+    
+    Parameters
+    ----------
+    query : str
+            Query from the user. 
+    dataframe : df 
+                Dataframe from the py files.
+    Returns
+    -------
+    video 
+         It will show the video. 
+    """
     se = SemanticSearch(query, dataframe)
     timing, yt_links = se.search()
     for i in range(len(yt_links)): 
         st.caption(f"Video: {i + 1}")
         st.video(yt_links[i], start_time = timing[i])
 
+        
 @st.cache(show_spinner = False)
-def si(link): 
+def si(link : str): 
+    """It helps to build DataFrame from the link given by user. 
+    
+    Parameters
+    ----------
+    link : str 
+           Link given by user. 
+    Returns 
+    -------
+    DF : dataframe 
+         It will return the datframe of the respective link. 
+    """ 
     try: 
         from single import DFMaker, SingleFileTranscript
         single_transcript = SingleFileTranscript(link).get_transcript() 
@@ -32,8 +57,20 @@ def si(link):
     except Exception as E: 
         st.write(E)
 
+        
 @st.cache(show_spinner = False)
-def pi(link): 
+def pi(link : str): 
+    """It helps to build DataFrame from the link given by user. 
+    
+    Parameters
+    ----------
+    link : str 
+           Link given by user. 
+    Returns 
+    -------
+    DF : dataframe 
+         It will return the datframe of the respective link. 
+    """ 
     try: 
         from playlist import DFMaker, TranscriptSaverPlaylist 
         playlist_transcript = TranscriptSaverPlaylist([link]).get_transcript()
@@ -42,8 +79,20 @@ def pi(link):
     except Exception as E: 
         st.write(E)
 
+        
 @st.cache(show_spinner = False)
-def ci(): 
+def ci(link : str): 
+    """It helps to build DataFrame from the link given by user. 
+    
+    Parameters
+    ----------
+    link : str 
+           Link given by user. 
+    Returns 
+    -------
+    DF : dataframe 
+         It will return the datframe of the respective link. 
+    """ 
     try: 
         from channel import DFMaker, TranscriptSaverChannel
         channel_transcripts = TranscriptSaverChannel(link).get_transcript()
@@ -53,27 +102,51 @@ def ci():
     except Exception as E: 
         st.write(E)
 
-def check_email(email):
+        
+def check_email(email : str):
+    """It will check the email while it's right or wrong. 
+    
+    Parameters
+    ----------
+    email : str 
+            email given by user
+    """
     regex = r'\b[A-Za-z0-9._%+-]+@gmail.com'
     if(re.fullmatch(regex, email)):
         return True 
     else: return False
 
 
-def get_title_helper(video_id): 
-    # https://stackoverflow.com/questions/59627108/retrieve-youtube-video-title-using-api-python
+def get_title_helper(video_id : str): 
+    """It will return the video title by using the video link. 
+    
+    Parameters
+    ----------
+    video_id : str
+    
+    Returns
+    --------
+    title : str
+            video title 
+            
+    Reference
+    ---------
+    https://stackoverflow.com/questions/59627108/retrieve-youtube-video-title-using-api-python
+    """
+    try: 
+        VideoID = video_id 
+        params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % VideoID}
+        url = "https://www.youtube.com/oembed"
+        query_string = urllib.parse.urlencode(params)
+        url = url + "?" + query_string
+        with urllib.request.urlopen(url) as response:
+            response_text = response.read()
+            data = json.loads(response_text.decode())
 
-    VideoID = video_id 
-    params = {"format": "json", "url": "https://www.youtube.com/watch?v=%s" % VideoID}
-    url = "https://www.youtube.com/oembed"
-    query_string = urllib.parse.urlencode(params)
-    url = url + "?" + query_string
-    with urllib.request.urlopen(url) as response:
-        response_text = response.read()
-        data = json.loads(response_text.decode())
-        
-    return data['title']
-
+        return data['title']
+    except Exception as E: 
+        st.write(E)
+   
 ########################### Page Configuraiton ###############################
 page_title = "Smart Search"
 page_icon = '🔥'
