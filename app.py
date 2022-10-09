@@ -262,7 +262,6 @@ if choice == 'Login':
         <br>
         <p style="font-family:Monospace;font-size:20px">If you have any query you can specify that in  <span style="color:red;"><b>contact section</b></span>.
         </p>""", True) 
-        st.write(f"Total page views: {current_number()}") 
         st.metric(label="Page views", value=current_number())
 
       with C: 
