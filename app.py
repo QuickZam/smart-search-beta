@@ -147,6 +147,24 @@ def get_title_helper(video_id : str):
     except Exception as E: 
         st.write(E)
    
+
+def page_count(): 
+    """
+    data = {'count': 1}
+    db.child('myOwnId').set(data) 
+    """
+    a = db.child('myOwnId').get()
+    b = [i.val() for i in a][0]
+    c = b + 1 
+    db.child('myOwnId').update({'count': c})
+    
+    
+def current_number(): 
+    a = db.child('myOwnId').get()
+    b = [i.val() for i in a][0]
+    return b 
+
+
 ########################### Page Configuraiton ###############################
 page_title = "Smart Search"
 page_icon = '🔥'
@@ -229,6 +247,8 @@ if choice == 'Login':
 
     try: 
       user = auth.sign_in_with_email_and_password(email,password)
+      page_count()
+        
       H, S, C = st.tabs(['HOME', 'SMART SEARCH', 'CONTACT'])  # creating tab 
       st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
 
@@ -242,6 +262,7 @@ if choice == 'Login':
         <br>
         <p style="font-family:Monospace;font-size:20px">If you have any query you can specify that in  <span style="color:red;"><b>contact section</b></span>.
         </p>""", True) 
+        st.write(f"Total page views: {current_number()}") 
 
       with C: 
         pass 
