@@ -12,3 +12,11 @@ print('\n\n')
 print(render_md_from_obj_docstring(parse_text, 'app.si')) 
 
 ```
+
+## RUNNING DOCKER FILE 
+
+```python
+docker build -t streamlit .
+
+docker run -p 8501:8501 streamlit
+```
