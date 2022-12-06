@@ -333,6 +333,8 @@ if choice == 'Login':
               list_ = []
               for i in list_of_files: 
                 list_.append(i.key())
+
+              list_.append('ALL')
               option = st.selectbox('Select the video to Query', list_)
 
               index_ = list_.index(option)
@@ -341,12 +343,25 @@ if choice == 'Login':
               for b in list_of_files: 
                 list_f.append(b.val())
 
-              a = list(list_f[index_].keys())
-              js = list_f[index_].get(a[0])
+              if option == 'ALL': 
+                df_ = []
+                for e, i in enumerate(list_f):
+                    df_l = list(i.keys())[0]
+                    df_l = list_f[e].get(df_l)
+                    df_l = pd.read_json(df_l)
+                    df_.append(df_l)
+                qyery = st.text_area('Enter your Query')
+                df = pd.concat(df_)
+                df['Embeddings'] = df['Embeddings'].apply(lambda x: np.array(x, dtype = np.float32 ))
 
-              qyery = st.text_area('Enter your Query')
-              df = pd.read_json(js)
-              df['Embeddings'] = df['Embeddings'].apply(lambda x: np.array(x, dtype = np.float32 ))
+              else: 
+
+                a = list(list_f[index_].keys())
+                js = list_f[index_].get(a[0])
+
+                qyery = st.text_area('Enter your Query')
+                df = pd.read_json(js)
+                df['Embeddings'] = df['Embeddings'].apply(lambda x: np.array(x, dtype = np.float32 ))
              
 
               if st.button('process'): 
