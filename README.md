@@ -20,3 +20,9 @@ docker build -t streamlit .
 
 docker run -p 8501:8501 streamlit
 ```
+
+## LINKS 
+
+- [**streamlit**](https://quickzam-smart-search-beta-app-ygf3ra.streamlit.app/)
+
+- [**Digital Ocean**](http://139.59.66.61:8501/)
